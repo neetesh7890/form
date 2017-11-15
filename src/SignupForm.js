@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class SignupForm extends Component {
   constructor(props) {
@@ -20,6 +21,30 @@ class SignupForm extends Component {
       e.preventDefault();
       console.log(this.state);
     }
+
+  createEndUser = () => {
+    axios.post(
+      'http://localhost:3002/auth',
+        {
+          username: this.state.username,
+          email: this.state.email,
+          password: this.state.password,
+          password_confirmation: this.state.password,
+          address: this.state.address
+        }
+    )
+    .then(response => {
+      if (response.status === 200){
+        console.log(response);
+        const location = {
+              pathname: '/',
+              state: { from: {pathname: '/signupform'} }
+          }
+        this.props.history.push(location);
+      }
+    })
+    .catch(error => console.log(error))
+  }
 
   render() {
     return (
@@ -70,8 +95,8 @@ class SignupForm extends Component {
         </div>
 
         <div className="form-group">
-          <button className="btn btn-primary btn-lg">
-            Siggn up
+          <button className="btn btn-primary btn-lg" onClick={this.createEndUser}>
+            Sign up
           </button>
         </div>
       </form>
