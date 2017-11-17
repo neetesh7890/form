@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 class SignupForm extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class SignupForm extends Component {
 
   createEndUser = () => {
     axios.post(
-      'http://localhost:3002/auth',
+      'http://localhost:3000/auth',
         {
           username: this.state.username,
           email: this.state.email,
@@ -34,8 +35,10 @@ class SignupForm extends Component {
         }
     )
     .then(response => {
-      if (response.status === 200){
+      if (response.status === 200 && response.headers["access-token"] != null ){
         console.log(response);
+        debugger
+
         const location = {
               pathname: '/',
               state: { from: {pathname: '/signupform'} }
@@ -46,9 +49,29 @@ class SignupForm extends Component {
     .catch(error => console.log(error))
   }
 
+  signOut = (id) => {
+    axios({
+      method: 'delete',
+      url: 'http://localhost:3000/auth/sign_out',
+      headers: {
+        'access-token': "eR-08PKct24dcspIhfeXZw" ,
+        'uid': "sfdjl@gmail.com",
+        'client': "ScvFtyxMwsaKAm_tAwXx7g"
+      }
+    })
+    .then(response => {
+        console.log(response);
+        debugger
+      })
+    .catch(error => console.log(error))
+  }
+ 
+
   render() {
     return (
       <form onSubmit={this.onSubmit}>
+        <Link to={''} className="button" onClick={this.signOut}>Signout</Link>
+        
         <h1> Join us</h1>
         <div className="form-group">
           <label className="control-label">Username</label>

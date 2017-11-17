@@ -4,21 +4,27 @@ import './App.css';
 import SignupForm from './SignupForm';
 import Home from './Home';
 import Dashboard from './Dashboard';
+import Login from './Login';
+import axios from 'axios';
 
 class App extends Component {
+
+  
+
   render() {
     return (
       <Router>
         <div className="row">
-          <nav class="navbar navbar-default">
-            <div class="container-fluid">
-              <div class="navbar-header">
+          <nav className="navbar navbar-default">
+            <div className="container-fluid">
+              <div className="navbar-header">
                 <Link to={'/'} className="navbar-brand">My Website</Link>
               </div>
-              <ul class="nav navbar-nav">
-                <li class="active"><Link to={'/'}>Home</Link></li>
+              <ul className="nav navbar-nav">
+                <li className="active"><Link to={'/'}>Home</Link></li>
                 <li><Link to={'/dashboard'}>Dashboard</Link></li>
-                <li><Link to={'/signupform'}>Signup here...</Link></li>
+                <li><Link to={'/signupform'}>Signup</Link></li>
+                <li><Link to={'/login'}>Login</Link></li>
               </ul>
             </div>
           </nav>
@@ -27,6 +33,7 @@ class App extends Component {
               <Route exact path='/' component={Home}/>
               <Route path='/dashboard' component={Dashboard} />
               <Route path='/signupform' component={SignupForm} />
+              <Route path='/login' component={Login} />
           </Switch>
         </div>
       </Router>
